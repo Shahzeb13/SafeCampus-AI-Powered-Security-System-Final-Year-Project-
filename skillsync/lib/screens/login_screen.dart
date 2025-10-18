@@ -1,17 +1,6 @@
-// 1. Define Requirements:
-//    - Email/Password fields
-//    - Login button
-//    - Validation rules
-//    - Error handling
-//    - Navigation flow
-
-// 2. Choose Architecture:
-//    - StatefulWidget for form state
-//    - GlobalKey<FormState> for form validation
-//    - TextEditingController for input handling
 
 import "package:flutter/material.dart";
-
+import 'package:skillsync/utils/validators.dart';
 
 
 class LoginScreen extends StatefulWidget{
@@ -23,6 +12,37 @@ class LoginScreen extends StatefulWidget{
 
 
 class _LoginScreenState extends State<LoginScreen> {
+
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    final TextEditingController _emailController  = TextEditingController();
+    final TextEditingController _passwordController = TextEditingController();
+
+
+    void submitForm(){
+
+      if(_formKey.currentState!.validate()){
+        print("All validatons Passed .");
+
+        String email = _emailController.text;
+        String password = _passwordController.text;
+
+        print("Email  :  $email" );
+        print("Password  $password");
+
+
+      }
+      else{
+        print("Validation Failed!!");
+      }
+    }
+
+    
+
+  void despose(){
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+    }
 
 
   @override
@@ -44,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
        child: SafeArea(
-        child: SingleChildScrollView(
+        child: Center(
           child: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -70,21 +90,16 @@ class _LoginScreenState extends State<LoginScreen> {
             
             // color: Colors.yellow[100],
             width: double.infinity,
-            height: MediaQuery.of(context).size.height,
-            padding: EdgeInsets.all(30),
-            margin: EdgeInsets.all(60),
-            // decoration: BoxDecoration(
-            //   color: const Color.fromARGB(83, 179, 229, 252)!,
-            //   borderRadius: BorderRadius.circular(20),
-            //   boxShadow: [
-            //     BoxShadow(
-            //       color: const Color.fromARGB(120, 59, 46, 87),
-            //       blurRadius: 14.0,
-            //       offset: Offset(4, 4)
-            //     )
-            //   ]
-            // ),
-            child: Column(
+            constraints: BoxConstraints(maxWidth: 400),
+            // height: MediaQuery.of(context).size.height,
+            padding: EdgeInsets.all(45),
+            margin: EdgeInsets.all(20),
+           
+          
+
+            child: Form(
+              key: _formKey,
+              child: Column(
               
             mainAxisAlignment : MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -105,18 +120,26 @@ class _LoginScreenState extends State<LoginScreen> {
 
               SizedBox(height: 50),
               TextFormField(
+                controller: _emailController,
+                validator: validateEmail,
                 decoration: InputDecoration(
                   // labelText: "Email",
                   hintText: "you@example.com", 
                   prefixIcon: Icon(Icons.email),
-                  border:OutlineInputBorder()
+                  border: OutlineInputBorder(),
                 ),
               ),
+
               SizedBox(height: 30,),
+
               TextFormField(
+                controller: _passwordController,
+                validator: validatePassword,
+                obscureText: true,
                 decoration: InputDecoration(
                   hintText: "Enter your Password",
                   border: OutlineInputBorder(),
+                
                   prefixIcon: Icon(Icons.password)
                 ),
               ),
@@ -125,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: double.infinity,
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed:submitForm,
                       child: Text('SIGN IN'),
                     ),
                  
@@ -168,49 +191,9 @@ class _LoginScreenState extends State<LoginScreen> {
           )
         )
        )
-        
-       )
+        )
      ),
+    )
     );
   }
 }
-
-
-
-
-
-//  body: SafeArea(
-//         child: SingleChildScrollView(
-//           child: Container(
-//             color: Colors.lightBlue,
-//             padding: EdgeInsets.all(100),
-//             // height: MediaQuery.of(context).size.height,
-//             height: MediaQuery.of(context).size.height,
-//             width: double.infinity,
-//             child:Column(
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               crossAxisAlignment: CrossAxisAlignment.center,
-//               children  : [
-//                 Container(
-//                     color: Colors.blue[100],
-//                     padding: EdgeInsets.all(10),
-//                     child: Text(
-//                       'Welcome to Your App!',
-//                       style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-//                       textAlign: TextAlign.center, // 🎯 Centers text inside container
-//                     ),
-//                   ),
-//                   SizedBox(height: 20),
-//                   Container(
-//                     color: Colors.green[100],
-//                     padding: EdgeInsets.all(10),
-//                     child: Text(
-//                       'You are now a Flutter Padawan!',
-//                       style: TextStyle(fontSize: 16, color: Colors.grey),
-//                       textAlign: TextAlign.center,
-//                     ),
-//                   )
-//               ]
-//             )
-//           ),
-//         ),
