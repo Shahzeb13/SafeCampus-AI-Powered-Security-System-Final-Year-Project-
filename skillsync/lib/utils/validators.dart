@@ -8,6 +8,17 @@ String? validateEmail(String? value){
   }
 }
 
+String? validateUsername(String? value) {
+  print('👤 Flutter automatically called validateUsername with: "$value"');
+  if (value == null || value.isEmpty) {
+    return "Please enter your username";
+  }
+  if (value.length < 3) {
+    return "Username must be at least 3 characters";
+  }
+  // Add any other username validation rules here (optional)
+  return null;
+}
 
 String? validatePassword(String? value){
   print('🔒 Flutter automatically called validatePassword with: "$value"');
