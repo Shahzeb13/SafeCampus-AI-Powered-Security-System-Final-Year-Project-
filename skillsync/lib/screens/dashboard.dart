@@ -184,7 +184,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 onTap: () {
                   Navigator.pop(context);
                   print("Logout Button Clicked");
-                  // Navigator.pushNamed(context , "/signup");
+                  Navigator.pushNamed(context , "/signup");
                 },
                 contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                 shape: RoundedRectangleBorder(
